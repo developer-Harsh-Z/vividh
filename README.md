@@ -1,74 +1,141 @@
-# Welcome to your Lovable project
+# 🎨 VIVIDH - Social Media Club Website
 
+![VIVIDH Banner](https://via.placeholder.com/1200x400/000000/FFFFFF?text=VIVIDH+SOCIAL+MEDIA+CLUB)
 
-## Project info
+A stunning black and white anime-style website for **VIVIDH: The Social Media Club** of University School of Engineering and Technology. This project combines sophisticated monochrome aesthetics with strategic color accents for an immersive user experience.
 
-**URL**: https://lovable.dev/projects/b10df317-c066-4455-b5af-6824011d4fd6
+## ✨ Features
 
-## How can I edit this code?
+### 🎭 Design & Aesthetics
+- **Monochrome Anime Theme**: Black and white design with strategic electric blue accents
+- **Manga-Inspired Layout**: Clean, modern interface with manga art elements
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop
+- **Smooth Animations**: Ink drop transitions, typewriter effects, and hover animations
 
-There are several ways of editing your application.
+### 🚀 Functionality
+- **Team Management**: Interactive team member profiles with skill tags
+- **Event Showcase**: Beautiful event gallery with filtering capabilities
+- **Recruitment System**: Streamlined membership application process
+- **Achievement Tracking**: Badge system for member accomplishments
+- **Social Proof**: Animated counters for club metrics
 
-**Use Lovable**
+### 🎯 Sections
+- **Hero**: Compelling introduction with animated elements
+- **Our Story**: Club timeline and mission statement
+- **The Squad**: Team member profiles and roles
+- **Missions**: Event coverage and upcoming activities
+- **Memory Archive**: Photo and video gallery
+- **Join Us**: Membership recruitment portal
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b10df317-c066-4455-b5af-6824011d4fd6) and start prompting.
+## 🛠 Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+### Frontend
+- **React.js** - Modern UI framework
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Animation library
+- **Lucide React** - Beautiful icons
 
-**Use your preferred IDE**
+### Backend & Services
+- **Firebase** - Authentication and database
+- **Cloudinary** - Image and video management
+- **Azure Face API** - AI-powered face recognition
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Deployment
+- **Vercel** - Frontend hosting
+- **Railway** - Backend services
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🎨 Color Scheme
 
-Follow these steps:
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Primary Black | `#000000` | Backgrounds, text |
+| Primary White | `#FFFFFF` | Text, cards |
+| Electric Blue | `#00D4FF` | Interactive elements, accents |
+| Neon Pink | `#FF0080` | Highlights, alerts |
+| Gold | `#FFD700` | Achievements, badges |
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 📁 Project Structure
+vividh-website/
+├── public/
+│ ├── Logo_VIVIDG_OG.PNG
+│ ├── favicon.ico
+│ └── index.html
+├── src/
+│ ├── components/
+│ │ ├── Hero/
+│ │ ├── Navigation/
+│ │ ├── Sections/
+│ │ └── UI/
+│ ├── styles/
+│ ├── hooks/
+│ ├── utils/
+│ ├── assets/
+│ └── App.jsx
+├── package.json
+└── README.md
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🚀 Quick Start
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/vividh-website.git
+   cd vividh-website
+Install dependencies
+
+bash
 npm run dev
-```
+Build for production
 
-**Edit a file directly in GitHub**
+bash
+npm run build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
 
-**Use GitHub Codespaces**
+🎮 Interactive Elements
+Hover Effects: Blue glow animations on interactive components
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Click Animations: Smooth scale transforms and ripple effects
 
-## What technologies are used for this project?
+Scroll Animations: Triggered fade-ins and slide-ups
 
-This project is built with:
+Form Interactions: Real-time validation with visual feedback
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+🔧 Configuration
+Firebase Setup
+Create a new Firebase project
 
-## How can I deploy this project?
+Enable Authentication (Email/Password)
 
-Simply open [Lovable](https://lovable.dev/projects/b10df317-c066-4455-b5af-6824011d4fd6) and click on Share -> Publish.
+Create Firestore Database
 
-## Can I connect a custom domain to my Lovable project?
+Configure Storage rules
 
-Yes, you can!
+Update environment variables
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Cloudinary Configuration
+Create Cloudinary account
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Get cloud name and API keys
+
+Configure upload presets
+
+Set up transformations for optimized images
+
+Azure Face API
+Create Azure Cognitive Services resource
+
+Get endpoint and subscription key
+
+Configure face detection settings
+
+📊 Performance Metrics
+Metric	Target
+Load Time	< 3 seconds
+Mobile Score	> 90/100
+Accessibility	> 95/100
+Best Practices	> 90/100
