@@ -97,41 +97,14 @@ npm run build
 
 
 🎮 Interactive Elements
-Hover Effects: Blue glow animations on interactive components
+    - Hover Effects: Blue glow animations on interactive components
 
-Click Animations: Smooth scale transforms and ripple effects
+    - Click Animations: Smooth scale transforms and ripple effects
 
-Scroll Animations: Triggered fade-ins and slide-ups
+    - Scroll Animations: Triggered fade-ins and slide-ups
 
-Form Interactions: Real-time validation with visual feedback
+    - Form Interactions: Real-time validation with visual feedback
 
-🔧 Configuration
-Firebase Setup
-Create a new Firebase project
-
-Enable Authentication (Email/Password)
-
-Create Firestore Database
-
-Configure Storage rules
-
-Update environment variables
-
-Cloudinary Configuration
-Create Cloudinary account
-
-Get cloud name and API keys
-
-Configure upload presets
-
-Set up transformations for optimized images
-
-Azure Face API
-Create Azure Cognitive Services resource
-
-Get endpoint and subscription key
-
-Configure face detection settings
 
 📊 Performance Metrics
 Metric	Target
