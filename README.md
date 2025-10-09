@@ -1,6 +1,5 @@
 # Welcome to your Lovable project
 
-This project is now owned and maintained by the user. It is a web application built with React, TypeScript, and Tailwind CSS, utilizing the shadcn-ui component library.
 
 ## Project info
 
