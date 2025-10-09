@@ -97,7 +97,6 @@ npm run build
 
 
 🎮 Interactive Elements
-<<<<<<< HEAD
     - Hover Effects: Blue glow animations on interactive components
 
     - Click Animations: Smooth scale transforms and ripple effects
@@ -106,13 +105,6 @@ npm run build
 
     - Form Interactions: Real-time validation with visual feedback
 
-=======
-    -  Hover Effects: Blue glow animations on interactive components
-    -  Click Animations: Smooth scale transforms and ripple effects
-    -  Scroll Animations: Triggered fade-ins and slide-ups
-    -  Form Interactions: Real-time validation with visual feedback
-
->>>>>>> 7076e960578f8a57ddefa9a083264128b223379d
 
 📊 Performance Metrics
 Metric	Target
