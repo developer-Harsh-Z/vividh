@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { atLeast, allowedEmail, isUset, checkUpload, slugify, driveFolderId, signSession, verifySession, canSeeMedia } from "./rules.ts";
+import { atLeast, allowedEmail, canSignIn, isUset, checkUpload, slugify, driveFolderId, signSession, verifySession, canSeeMedia } from "./rules.ts";
 
 test("roles rank in order", () => {
   assert.ok(atLeast("owner", "admin"));
@@ -12,6 +12,9 @@ test("only college addresses may sign in", () => {
   assert.ok(allowedEmail("Riya.uset@LTSU.ac.in", "ltsu.ac.in"));
   assert.ok(!allowedEmail("riya@gmail.com", "ltsu.ac.in"));
   assert.ok(!allowedEmail("evil@ltsu.ac.in.attacker.com", "ltsu.ac.in"));
+  assert.ok(canSignIn("Owner@Gmail.com", "ltsu.ac.in", ["owner@gmail.com"]));
+  assert.ok(!canSignIn("other@gmail.com", "ltsu.ac.in", ["owner@gmail.com"]));
+  assert.ok(!canSignIn("x@gmail.com", "ltsu.ac.in", [""]));
   assert.ok(isUset("riya.uset@ltsu.ac.in", ".uset@ltsu.ac.in"));
   assert.ok(!isUset("prof@ltsu.ac.in", ".uset@ltsu.ac.in"));
 });

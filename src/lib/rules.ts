@@ -7,6 +7,9 @@ export const atLeast = (role: Role | undefined, min: Role) => role !== undefined
 
 export const normEmail = (email: string) => email.trim().toLowerCase();
 export const allowedEmail = (email: string, domain: string) => normEmail(email).endsWith("@" + domain.toLowerCase());
+// Owners listed by exact address may sign in from outside the college domain (e.g. during setup).
+export const canSignIn = (email: string, domain: string, owners: string[]) =>
+  allowedEmail(email, domain) || owners.map(normEmail).includes(normEmail(email));
 export const isUset = (email: string, suffix: string) => normEmail(email).endsWith(suffix.toLowerCase());
 
 // Upload limits (PRD F4). HEIC is left out on purpose: iOS converts to JPEG when the picker doesn't accept it (D23).

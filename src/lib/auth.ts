@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { db, env } from "./db";
-import { allowedEmail, atLeast, normEmail, signSession, verifySession, type Role } from "./rules";
+import { atLeast, canSignIn, normEmail, signSession, verifySession, type Role } from "./rules";
 
 export const SESSION_COOKIE = "vs";
 const DAYS = 30;
@@ -44,7 +44,8 @@ const redirectUri = () => `${env("APP_URL")}/auth/callback`;
 export function googleAuthUrl(state: string) {
   const p = new URLSearchParams({
     client_id: env("GOOGLE_CLIENT_ID"), redirect_uri: redirectUri(), response_type: "code",
-    scope: "openid email profile", state, hd: env("ALLOWED_DOMAIN"), prompt: "select_account",
+    // No `hd` hint: it would hide owners' non-college accounts. The server check in signIn() is what enforces the domain.
+    scope: "openid email profile", state, prompt: "select_account",
   });
   return `https://accounts.google.com/o/oauth2/v2/auth?${p}`;
 }
@@ -69,8 +70,8 @@ export async function googleProfile(code: string) {
 // Creates or updates the user. Returns null when the address isn't allowed.
 export async function signIn(p: { email: string; verified: boolean; name: string; picture?: string }) {
   const email = normEmail(p.email);
-  if (!p.verified || !allowedEmail(email, env("ALLOWED_DOMAIN"))) return null;
-  const owners = (process.env.OWNER_EMAILS ?? "").split(",").map(normEmail);
+  const owners = (process.env.OWNER_EMAILS ?? "").split(",").map(normEmail).filter(Boolean);
+  if (!p.verified || !canSignIn(email, env("ALLOWED_DOMAIN"), owners)) return null;
   const user = await db.user.upsert({
     where: { email },
     create: { email, name: p.name, image: p.picture, lastLogin: new Date(), role: owners.includes(email) ? "owner" : "student" },

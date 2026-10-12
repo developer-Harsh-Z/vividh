@@ -9,3 +9,6 @@ next-env.d.ts
 .DS_Store
 *.log
 .claude/
+
+.vercel
+.env*

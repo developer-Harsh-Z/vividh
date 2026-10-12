@@ -14,7 +14,7 @@ All are listed with comments in [`.env.example`](../.env.example).
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | yes | OAuth client (below) |
 | `ALLOWED_DOMAIN` | yes | `ltsu.ac.in` |
 | `USET_SUFFIX` | yes | `.uset@ltsu.ac.in` |
-| `OWNER_EMAILS` | yes | Comma-separated; these become owners on first sign-in |
+| `OWNER_EMAILS` | yes | Comma-separated; these become owners on first sign-in, and may sign in even from outside `ALLOWED_DOMAIN` (useful during setup; switch to the President's and Faculty Coordinator's LTSU addresses before launch) |
 | `S3_ENDPOINT` / `S3_BUCKET` / `S3_ACCESS_KEY` / `S3_SECRET_KEY` / `S3_REGION` | yes | R2 or MinIO |
 | `S3_PUBLIC_ENDPOINT` | optional | Storage address browsers use, when it differs from the server's (Docker on college servers) |
 | `DRIVE_SA_EMAIL` / `DRIVE_SA_KEY` | for Drive | Service account (below) |
