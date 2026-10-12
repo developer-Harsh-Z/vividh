@@ -1,114 +1,57 @@
-# 🎨 VIVIDH - Social Media Club Website
+# VIVIDH
 
-![VIVIDH Banner](https://via.placeholder.com/1200x400/000000/FFFFFF?text=VIVIDH+SOCIAL+MEDIA+CLUB)
+The website of **VIVIDH (विविध)**, the social media club of the University School of Engineering and Technology (USET), Lamrin Tech Skills University.
 
-A stunning black and white anime-style website for **VIVIDH: The Social Media Club** of University School of Engineering and Technology. This project combines sophisticated monochrome aesthetics with strategic color accents for an immersive user experience.
+It has a public showcase (team, events, albums, recruitment), a portal where members and invited students upload event media, and an admin console for running the club.
 
-## ✨ Features
+## Quick start
 
-### 🎭 Design & Aesthetics
-- **Monochrome Anime Theme**: Black and white design with strategic electric blue accents
-- **Manga-Inspired Layout**: Clean, modern interface with manga art elements
-- **Responsive Design**: Fully optimized for mobile, tablet, and desktop
-- **Smooth Animations**: Ink drop transitions, typewriter effects, and hover animations
+Requirements: Node 24, plus Docker for the local database and storage. (No Docker? Point `DATABASE_URL` at any PostgreSQL 16, such as a free Neon database.)
 
-### 🚀 Functionality
-- **Team Management**: Interactive team member profiles with skill tags
-- **Event Showcase**: Beautiful event gallery with filtering capabilities
-- **Recruitment System**: Streamlined membership application process
-- **Achievement Tracking**: Badge system for member accomplishments
-- **Social Proof**: Animated counters for club metrics
+```bash
+cp .env.example .env          # defaults work for local dev
+docker compose up -d db minio # PostgreSQL + S3-compatible storage
+npm install
+npm run db:migrate            # create tables
+npm run db:seed               # sample events, members and tags
+npm run dev                   # http://localhost:3000
+```
 
-### 🎯 Sections
-- **Hero**: Compelling introduction with animated elements
-- **Our Story**: Club timeline and mission statement
-- **The Squad**: Team member profiles and roles
-- **Missions**: Event coverage and upcoming activities
-- **Memory Archive**: Photo and video gallery
-- **Join Us**: Membership recruitment portal
+With `DEV_LOGIN=1` in `.env`, the login page lets you sign in as any `@ltsu.ac.in` address without Google. This works only in development.
 
-## 🛠 Tech Stack
+## Scripts
 
-### Frontend
-- **React.js** - Modern UI framework
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **Lucide React** - Beautiful icons
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` / `npm start` | Production build and server |
+| `npm run check` | Type-check and run the unit checks (this also runs in CI) |
+| `npm run db:migrate` | Apply database migrations |
+| `npm run db:seed` | Load sample data (dev only) |
 
-### Backend & Services
-- **Firebase** - Authentication and database
-- **Cloudinary** - Image and video management
-- **Azure Face API** - AI-powered face recognition
+## Layout
 
-### Deployment
-- **Vercel** - Frontend hosting
-- **Railway** - Backend services
+```
+docs/            PRD, architecture, design system, decisions, runbook
+prisma/          database schema, migrations, seed
+public/          logo and static files
+src/app/         pages, server actions and API routes (Next.js App Router)
+  page.tsx, events/, team/, join/, removal/   public pages
+  portal/        signed-in pages: dashboard, upload, profile, search
+  admin/         admin console (all writes in admin/actions.ts)
+  auth/          Google sign-in routes
+  media/         permission-checked photo and video delivery
+  api/           health check and the retry cron
+src/lib/         database, auth, storage, Drive, image processing, form helpers, rules
+src/components/  shared components (motion, theme, lightbox, uploader)
+public/home, public/teams   stand-in photos from the design mockup: replace with real ones
+```
 
-## 🎨 Color Scheme
+## Docs
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Primary Black | `#000000` | Backgrounds, text |
-| Primary White | `#FFFFFF` | Text, cards |
-| Electric Blue | `#00D4FF` | Interactive elements, accents |
-| Neon Pink | `#FF0080` | Highlights, alerts |
-| Gold | `#FFD700` | Achievements, badges |
-
-## 📁 Project Structure
-vividh-website/
-├── public/
-│ ├── Logo_VIVIDG_OG.PNG
-│ ├── favicon.ico
-│ └── index.html
-├── src/
-│ ├── components/
-│ │ ├── Hero/
-│ │ ├── Navigation/
-│ │ ├── Sections/
-│ │ └── UI/
-│ ├── styles/
-│ ├── hooks/
-│ ├── utils/
-│ ├── assets/
-│ └── App.jsx
-├── package.json
-└── README.md
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/vividh-website.git
-   cd vividh-website
-Install dependencies
-
-bash
-npm run dev
-Build for production
-
-bash
-npm run build
-
-
-🎮 Interactive Elements
-    - Hover Effects: Blue glow animations on interactive components
-
-    - Click Animations: Smooth scale transforms and ripple effects
-
-    - Scroll Animations: Triggered fade-ins and slide-ups
-
-    - Form Interactions: Real-time validation with visual feedback
-
-
-📊 Performance Metrics
-Metric	Target
-Load Time	< 3 seconds
-Mobile Score	> 90/100
-Accessibility	> 95/100
-Best Practices	> 90/100
+- [Product requirements](docs/PRD.md) (a living copy also exists as a shared doc)
+- [Architecture](docs/ARCHITECTURE.md): how the system fits together and scales
+- [Design system](docs/DESIGN.md): type, color, motion, components
+- [Decisions](docs/DECISIONS.md): what we chose and why
+- [Runbook](docs/RUNBOOK.md): accounts, deployment, backups, handover, moving to college servers
+- [Contributing](CONTRIBUTING.md)

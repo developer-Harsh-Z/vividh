@@ -1,0 +1,283 @@
+// VIVIDH data model. See docs/ARCHITECTURE.md.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  student
+  member
+  admin
+  owner
+}
+
+enum Team {
+  leadership
+  ideation
+  writing
+  creative
+  video
+  editing
+}
+
+enum MemberStatus {
+  active
+  alumni
+  removed
+}
+
+enum Visibility {
+  full
+  name
+  hidden
+}
+
+enum EventType {
+  workshop
+  fest
+  seminar
+  competition
+  other
+}
+
+enum EventVisibility {
+  public
+  members
+}
+
+enum MediaKind {
+  image
+  video
+  link
+}
+
+enum MediaSource {
+  upload
+  drive
+}
+
+// uploading -> processing -> pending -> approved | rejected; removed after approval; failed after 3 tries
+enum MediaStatus {
+  uploading
+  processing
+  pending
+  approved
+  rejected
+  removed
+  failed
+}
+
+enum AppStatus {
+  submitted
+  shortlisted
+  interview
+  accepted
+  rejected
+  waitlisted
+}
+
+enum RemovalStatus {
+  open
+  done
+  declined
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  image        String?
+  role         Role          @default(student)
+  lastLogin    DateTime?
+  createdAt    DateTime      @default(now())
+  member       Member?
+  uploads      Media[]       @relation("uploads")
+  reviews      Media[]       @relation("reviews")
+  applications Application[]
+  logs         ActivityLog[]
+}
+
+model Member {
+  id          String       @id @default(cuid())
+  userId      String       @unique
+  user        User         @relation(fields: [userId], references: [id])
+  displayName String
+  bio         String       @default("")
+  instagram   String?
+  linkedin    String?
+  portfolio   String?
+  status      MemberStatus @default(active)
+  visibility  Visibility   @default(name)
+  batch       Int? // graduating year, for the alumni list
+  joinedOn    DateTime     @default(now())
+  leftOn      DateTime?
+  teams       MemberTeam[]
+  skills      SkillTag[]
+  credits     EventCredit[]
+  updatedAt   DateTime     @updatedAt
+
+  @@index([status])
+}
+
+model MemberTeam {
+  memberId  String
+  member    Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  team      Team
+  title     String  @default("Member")
+  isPrimary Boolean @default(false)
+
+  @@id([memberId, team])
+}
+
+model SkillTag {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  members Member[]
+}
+
+model Event {
+  id            String          @id @default(cuid())
+  slug          String          @unique
+  title         String
+  date          DateTime
+  venue         String          @default("")
+  type          EventType       @default(other)
+  description   String          @default("")
+  coverId       String?
+  driveFolderId String?
+  visibility    EventVisibility @default(members)
+  archivedAt    DateTime?
+  media         Media[]
+  credits       EventCredit[]
+  invites       UploadInvite[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@index([date])
+}
+
+model EventCredit {
+  eventId      String
+  event        Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  memberId     String
+  member       Member @relation(fields: [memberId], references: [id])
+  contribution String @default("coverage")
+
+  @@id([eventId, memberId])
+}
+
+model Media {
+  id           String      @id @default(cuid())
+  eventId      String
+  event        Event       @relation(fields: [eventId], references: [id])
+  uploaderId   String
+  uploader     User        @relation("uploads", fields: [uploaderId], references: [id])
+  kind         MediaKind
+  source       MediaSource @default(upload)
+  driveFileId  String?
+  mime         String?
+  originalKey  String? // bucket key while processing, or permanently when Drive isn't configured
+  displayKey   String?
+  thumbKey     String?
+  url          String? // for kind = link
+  caption      String      @default("")
+  altText      String      @default("")
+  tags         String[]
+  status       MediaStatus @default(uploading)
+  attempts     Int         @default(0)
+  error        String?
+  sizeBytes    Int?
+  width        Int?
+  height       Int?
+  reviewedById String?
+  reviewedBy   User?       @relation("reviews", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+  rejectReason String?
+  removals     RemovalRequest[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@unique([eventId, driveFileId])
+  @@index([status, updatedAt])
+  @@index([eventId, status])
+  @@index([uploaderId])
+}
+
+model UploadInvite {
+  id          String   @id @default(cuid())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  email       String
+  invitedById String
+  expiresAt   DateTime
+
+  @@unique([eventId, email])
+  @@index([email])
+}
+
+model RecruitmentWindow {
+  id           String        @id @default(cuid())
+  opensAt      DateTime
+  closesAt     DateTime
+  teams        Team[]
+  note         String        @default("")
+  applications Application[]
+  createdAt    DateTime      @default(now())
+}
+
+model Application {
+  id        String            @id @default(cuid())
+  windowId  String
+  window    RecruitmentWindow @relation(fields: [windowId], references: [id])
+  userId    String
+  user      User              @relation(fields: [userId], references: [id])
+  name      String
+  year      Int
+  branch    String
+  phone     String
+  choice1   Team
+  choice2   Team?
+  portfolio String?
+  taskLink  String?
+  why       String
+  status    AppStatus         @default(submitted)
+  notes     String            @default("")
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@unique([windowId, userId])
+  @@index([windowId, status])
+}
+
+// Append-only: production revokes UPDATE/DELETE on this table (docs/RUNBOOK.md)
+model ActivityLog {
+  id         Int      @id @default(autoincrement())
+  actorId    String
+  actor      User     @relation(fields: [actorId], references: [id])
+  action     String
+  targetType String
+  targetId   String
+  before     Json?
+  after      Json?
+  at         DateTime @default(now())
+
+  @@index([at])
+}
+
+model RemovalRequest {
+  id           String        @id @default(cuid())
+  mediaId      String
+  media        Media         @relation(fields: [mediaId], references: [id])
+  email        String
+  reason       String
+  status       RemovalStatus @default(open)
+  resolvedById String?
+  createdAt    DateTime      @default(now())
+
+  @@index([status])
+}

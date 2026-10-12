@@ -1,0 +1,15 @@
+name: Retry media processing
+on:
+  schedule: [{ cron: "*/15 * * * *" }]
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          APP_URL: ${{ secrets.APP_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$APP_URL" ]; then echo "APP_URL secret not set; skipping."; exit 0; fi
+          curl -fsS --max-time 70 -H "Authorization: Bearer $CRON_SECRET" "$APP_URL/api/jobs"
