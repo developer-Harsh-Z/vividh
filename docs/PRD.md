@@ -80,7 +80,7 @@ There are five roles. Each one adds to the role above it, except a Contributor, 
 
 Seventeen feature ideas were scored on their impact for the club and the effort to build them. The nine in the top half are v1; the rest wait until the archive and recruitment are proven.
 
-*(Diagram: feature brainstorm · impact vs. effort — see the [living PRD](https://claude.ai/code/artifact/4786db62-76a0-435e-a544-b9df04b7947a).)*
+*(Feature ideas scored by impact and effort: the top half became v1, the rest moved to v1.1 or were skipped.)*
 
 Badges and counters only mean something once the site holds real data, so they move to v1.1 rather than shipping with nothing behind them. AI tagging and Instagram sync need outside APIs and upkeep the club can't guarantee from batch to batch.
 
@@ -159,7 +159,7 @@ Version 1 has six feature areas, each with acceptance criteria a tester can chec
 
 The site runs as stateless app containers behind a CDN, with a managed PostgreSQL database and object storage. The app keeps nothing on its own disk or in its own memory, so handling more users means adding copies, not rewriting code. Each part has an open-source equivalent that runs on college servers.
 
-*(Diagram: system architecture · one app, four services — see the [living PRD](https://claude.ai/code/artifact/4786db62-76a0-435e-a544-b9df04b7947a).)*
+*(Architecture diagram: see [ARCHITECTURE.md](ARCHITECTURE.md).)*
 
 Public pages and approved images are served from Cloudflare's cache, so most visitor traffic never reaches the app. Photo and video bytes go from the phone straight to storage, and the worker processes them in the background.
 
@@ -214,7 +214,7 @@ These are planning assumptions, to be checked against real usage after the pilot
 
 ### Upload pipeline
 
-*(Diagram: upload pipeline · six steps — see the [living PRD](https://claude.ai/code/artifact/4786db62-76a0-435e-a544-b9df04b7947a).)*
+*(Upload pipeline: see [ARCHITECTURE.md](ARCHITECTURE.md#upload-pipeline).)*
 
 The app only handles small requests (steps 1, 2, 4 and 6). That's why a fest upload burst of 25 GB doesn't slow the site for anyone else.
 
@@ -280,7 +280,7 @@ Privacy comes first, because the archive is full of photos of students who never
 
 The plan is to launch v1 on 22 March 2027, about 20 weeks of part-time work by 3 to 4 student devs, leaving room for December exams. These dates are a first plan; adjust them once the dev team is confirmed.
 
-*(Diagram: roadmap · setup to v1.1 — see the [living PRD](https://claude.ai/code/artifact/4786db62-76a0-435e-a544-b9df04b7947a).)*
+*(Timeline: setup Oct 2026 · M1 Nov · exams Dec · M2 Jan–Feb · M3 Feb–Mar · pilot Mar · launch 22 Mar 2027 · pitch Apr · v1.1 Apr–May · move to college servers May–Jun.)*
 
 Each milestone ends with a demo to the club's admins. The pitch to the club and the college uses real pilot numbers, and the move to college servers is planned for May and June 2027, outside the exam season.
 

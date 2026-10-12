@@ -49,7 +49,7 @@ public/home, public/teams   stand-in photos from the design mockup: replace with
 
 ## Docs
 
-- [Product requirements](docs/PRD.md) (a living copy also exists as a shared doc)
+- [Product requirements](docs/PRD.md)
 - [Architecture](docs/ARCHITECTURE.md): how the system fits together and scales
 - [Design system](docs/DESIGN.md): type, color, motion, components
 - [Decisions](docs/DECISIONS.md): what we chose and why
